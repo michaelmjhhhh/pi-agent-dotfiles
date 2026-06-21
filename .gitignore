@@ -1,0 +1,19 @@
+# Secrets and credentials
+agent/auth.json
+**/*.key
+**/*.pem
+**/*.p12
+**/*.pfx
+.env
+.env.*
+
+# Local session/history data
+agent/sessions/
+
+# Logs and temporary files
+*.log
+.DS_Store
+.cache/
+tmp/
+temp/
+node_modules/
