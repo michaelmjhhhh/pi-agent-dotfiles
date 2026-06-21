@@ -1,15 +1,14 @@
 ---
-description: Commit and push staged pi agent config changes
+description: Commit and push pi agent config updates
 ---
-Review staged changes in the pi agent configuration repository at `~/.pi` using `git diff --cached`.
+Commit and push new pi agent configuration changes from the repository at `~/.pi`.
 
-Focus on:
-- Bugs and logic errors
-- Security issues, especially secrets or credentials that must not be committed
-- Error handling gaps
+Primary goal:
+1. Inspect `git status` in `~/.pi`.
+2. Stage all safe configuration changes that should be versioned.
+3. Do not stage secrets, credentials, local sessions, history, logs, or temporary files.
+4. Review the staged diff for obvious bugs, logic errors, security issues, and error-handling gaps.
+5. Commit using an appropriate Conventional Commit message.
+6. Push the current branch to its upstream remote.
 
-Then, if the staged changes are safe to publish:
-1. Commit them using an appropriate Conventional Commit message.
-2. Push the current branch to its upstream remote.
-
-If nothing is staged, inspect `git status`, stage only safe configuration files, avoid private session/history data and credentials, then commit and push.
+Use the existing `.gitignore` as a safety boundary, and update it first if new private/local-only paths appear.
