@@ -1,14 +1,14 @@
 ---
-description: Integrate Vercel Web Analytics into any project (Next.js App Router)
+description: Integrate Vercel Web Analytics into Next.js or React projects
 argument-hint: "[project-dir]"
 ---
 # Vercel Web Analytics Integration
 
-Integrate @vercel/analytics into the project at ${1:-.}.
+Integrate @vercel/analytics into the project at ${1:-.}. Supports Next.js (App Router & Pages Router) and plain React (Vite, CRA, etc.).
 
 ## Steps
 
-### 1. Detect package manager and install
+### 1. Detect framework and package manager
 
 ```bash
 cd "${1:-.}"
@@ -24,61 +24,81 @@ else
   PKG_MGR="npm install"
 fi
 
+# Detect framework
+if [ -f "next.config.js" ] || [ -f "next.config.ts" ] || [ -f "next.config.mjs" ]; then
+  FRAMEWORK="nextjs"
+elif grep -q '"vite"' package.json 2>/dev/null; then
+  FRAMEWORK="vite-react"
+elif [ -f "src/App.tsx" ] || [ -f "src/App.jsx" ] || [ -f "src/App.js" ]; then
+  FRAMEWORK="react"
+else
+  FRAMEWORK="unknown"
+fi
+```
+
+### 2. Install
+
+```bash
+cd "${1:-.}"
 $PKG_MGR @vercel/analytics
 ```
 
-### 2. Locate the root layout file
+### 3. Locate the root file and add the import + component
 
-Find where to place `<Analytics />`. For Next.js App Router (most common):
+**If Next.js App Router** (`app/layout.tsx` or `app/layout.jsx`):
+- Import from `@vercel/analytics/next`
+- Place `<Analytics />` inside `<body>`, right after the opening tag
 
-```bash
-# Look for layout files
-ls app/layout.tsx app/layout.jsx 2>/dev/null || echo "No standard layout found"
-```
+**If Next.js Pages Router** (`pages/_app.tsx`, `pages/_document.tsx`):
+- Import from `@vercel/analytics/react`
+- Place `<Analytics />` inside the root component
 
-If it's a Pages Router project (`pages/_app.tsx` or `pages/_document.tsx`), adjust accordingly.
+**If plain React** (look for `src/App.tsx`, `src/App.jsx`, `src/main.tsx`, `src/index.tsx`):
+- Import from `@vercel/analytics/react`
+- Place `<Analytics />` at the top of the app's root component (inside the JSX tree, typically near the top-level `<div>` or `<BrowserRouter>`)
 
-### 3. Add the import and component
-
-In the root layout file, add:
+**Only make these two changes** — add the import and place the `<Analytics />` component. Do not modify anything else.
 
 ```tsx
+// Next.js App Router — import
 import { Analytics } from "@vercel/analytics/next";
+
+// Next.js Pages Router / plain React — import
+import { Analytics } from "@vercel/analytics/react";
 ```
-
-And place `<Analytics />` inside the `<body>` element — right after the opening `<body>` tag is recommended.
-
-**Only make these two changes — do not modify anything else.**
 
 ### 4. Verify the build
 
 ```bash
 cd "${1:-.}"
-npx next build 2>&1 | tail -20
+
+if [ -f "next.config.js" ] || [ -f "next.config.ts" ] || [ -f "next.config.mjs" ]; then
+  npx next build 2>&1 | tail -20
+elif [ -f "vite.config.ts" ] || [ -f "vite.config.js" ]; then
+  npx vite build 2>&1 | tail -20
+else
+  echo "Run the project's build command to verify."
+fi
 ```
 
 Confirm the build succeeds with no TypeScript or compilation errors.
 
 ### 5. Commit and push
 
-Stage the changes, commit with a conventional commit message, and push to origin:
-
 ```bash
 cd "${1:-.}"
 git add -A
-git commit -m "feat(analytics): add Vercel Web Analytics integration
-
-Install @vercel/analytics and wire the Analytics component into the
-root layout for page-view tracking."
+git commit -m "feat(analytics): add Vercel Web Analytics integration"
 git push origin HEAD
 ```
 
-## Supported layouts
+## Lookup table
 
-| Framework / Router     | File                          | Import from                      |
-|------------------------|-------------------------------|----------------------------------|
-| Next.js App Router     | `app/layout.tsx`              | `@vercel/analytics/next`         |
-| Next.js Pages Router   | `pages/_app.tsx`              | `@vercel/analytics/react`        |
-| Next.js Pages Router   | `pages/_document.tsx`         | `@vercel/analytics/react`        |
+| Framework / Router         | Root file(s)                     | Import from                      | Build command         |
+|----------------------------|----------------------------------|----------------------------------|-----------------------|
+| Next.js App Router         | `app/layout.tsx` / `.jsx`        | `@vercel/analytics/next`         | `next build`          |
+| Next.js Pages Router       | `pages/_app.tsx` / `_document.tsx` | `@vercel/analytics/react`      | `next build`          |
+| React (Vite)               | `src/App.tsx` / `src/main.tsx`   | `@vercel/analytics/react`        | `vite build`          |
+| React (CRA)                | `src/App.js` / `src/index.js`    | `@vercel/analytics/react`        | `react-scripts build` |
 
-If the project doesn't use Next.js, stop and report what framework is being used — the template currently targets Next.js.
+If the framework is not detected as Next.js or React, stop and report what was found so the user can adjust manually.
