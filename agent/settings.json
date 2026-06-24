@@ -1,8 +1,8 @@
 {
-  "lastChangelogVersion": "0.79.10",
+  "lastChangelogVersion": "0.80.2",
   "theme": "dark",
   "defaultProvider": "opencode",
-  "defaultModel": "big-pickle",
+  "defaultModel": "deepseek-v4-flash-free",
   "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-web-access",
