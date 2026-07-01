@@ -3,12 +3,28 @@
   "theme": "dark",
   "defaultProvider": "opencode",
   "defaultModel": "deepseek-v4-flash-free",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "packages": [
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-subagents",
     "npm:@quintinshaw/pi-dynamic-workflows",
-    "npm:@hypabolic/pi-hypa"
-  ]
+    "npm:@hypabolic/pi-hypa",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-lens"
+  ],
+  "hideThinkingBlock": true,
+  "subagents": {
+    "agentOverrides": {
+      "planner": {
+        "defaultContext": false
+      },
+      "worker": {
+        "defaultContext": false
+      },
+      "oracle": {
+        "defaultContext": false
+      }
+    }
+  }
 }
