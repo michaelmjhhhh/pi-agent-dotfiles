@@ -15,6 +15,7 @@ agent/skills/
 
 # Logs and temporary files
 *.log
+*.jsonl
 .DS_Store
 .cache/
 tmp/

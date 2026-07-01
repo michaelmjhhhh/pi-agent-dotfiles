@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.80.2",
+  "lastChangelogVersion": "0.80.3",
   "theme": "dark",
   "defaultProvider": "opencode",
   "defaultModel": "deepseek-v4-flash-free",
@@ -7,6 +7,8 @@
   "packages": [
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:pi-subagents"
+    "npm:pi-subagents",
+    "npm:@quintinshaw/pi-dynamic-workflows",
+    "npm:@hypabolic/pi-hypa"
   ]
 }
