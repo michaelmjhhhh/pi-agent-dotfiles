@@ -3,15 +3,13 @@
   "theme": "dark",
   "defaultProvider": "opencode",
   "defaultModel": "deepseek-v4-flash-free",
-  "defaultThinkingLevel": "xhigh",
+  "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-subagents",
     "npm:@quintinshaw/pi-dynamic-workflows",
-    "npm:@hypabolic/pi-hypa",
-    "npm:@juicesharp/rpiv-todo",
-    "npm:pi-lens"
+    "npm:@juicesharp/rpiv-todo"
   ],
   "hideThinkingBlock": true,
   "subagents": {
