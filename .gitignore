@@ -7,9 +7,10 @@ agent/auth.json
 .env
 .env.*
 
-# Local session/history data
+# Local session/history and generated model cache data
 agent/sessions/
 agent/run-history.jsonl
+agent/models-store.json
 
 # Dynamic workflow and subagent run artifacts
 workflows/projects/

@@ -1,18 +1,18 @@
 {
-  "lastChangelogVersion": "0.80.7",
+  "lastChangelogVersion": "0.81.1",
   "theme": "dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
-  "defaultThinkingLevel": "medium",
+  "defaultThinkingLevel": "minimal",
   "packages": [
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-subagents",
-    "npm:@quintinshaw/pi-dynamic-workflows",
     "npm:@juicesharp/rpiv-todo",
     "npm:pi-intercom",
     "npm:pi-prompt-template-model",
-    "npm:@upstash/context7-pi"
+    "npm:@upstash/context7-pi",
+    "npm:pi-atelier"
   ],
   "hideThinkingBlock": true,
   "subagents": {
